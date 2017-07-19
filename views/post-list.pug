@@ -1,0 +1,12 @@
+extends layout.pug
+ 
+ block content
+     form(action="/post-list", method="GET")
+     div(id="posts")
+         h1 List of posts
+         ul(class="posts-list")
+             each post in posts
+                 li(class='post-item')
+                     h2(class='post-item__title')
+                         a(href=post.url) #{post.title}
+                     p Created by #{post.user.name}

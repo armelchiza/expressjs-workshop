@@ -63,13 +63,20 @@ app.get('/calculator/:operation', function(req, res){
 
 app.get('/posts', function(req, res){
   myReddit.getAllPosts().then(results =>{
-    console.log(results, "results")
     res.render('posts', {posts: results}) // use pug and pass results to it
+    // res.render('post-list', {posts : results});
   })
   .catch(err => {
     res.status(500).send(err.stack);
   })
 });
+
+app.get('/post-list', function (request, response) {
+   myReddit.getAllPosts()
+   .then(posts => {
+     response.render('post-list', {posts: posts});
+   });
+ });
 
 // #5
 
@@ -88,7 +95,7 @@ app.get('/new-post', function(req, res){
 });
 
 
-// #6
+// #6/#7 going back and forth with #5
 
 //catching the submission from the new-post
 app.post('/createPost', bodyParser.urlencoded({extended:false}),(req,res) =>{
@@ -107,8 +114,6 @@ app.post('/createPost', bodyParser.urlencoded({extended:false}),(req,res) =>{
 //basically always redirect after post request. ///
 
 // #8
-
-
 
 app.listen(3333, function() {
   console.log('Server running on port 3333 ...');
